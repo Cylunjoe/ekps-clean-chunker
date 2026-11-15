@@ -11,9 +11,16 @@ Tested on Dify Cloud with a knowledge pipeline (File → Dify Extractor → this
 
 ## What it does (one document at a time)
 
-1. **Removes noise**: cover and sign-off lines (organization name, document number, date on their own line), separator lines, page numbers, table-of-contents lines, addressee lines, and the title line. Lines containing amounts, deadlines or prohibitions ("不得", "禁止"...) are always kept.
-2. **Chunks by clause**: a new chunk starts at each "第X条"; following paragraphs stay with their clause. Chapter headings ("第X章", Markdown headings) go into the context header instead of becoming chunks. A Markdown table stays in one chunk together with its caption; long tables are split by rows with the header row repeated. Without clause numbers, each paragraph is its own chunk.
+1. **Removes noise**: cover and sign-off lines (organization name, document number, date on their own line), separator lines, page numbers, table-of-contents lines, addressee lines, and the title line. Lines containing amounts, deadlines or prohibitions ("must not", "prohibited"...) are always kept.
+2. **Chunks by clause**: a new chunk starts at each clause marker ("Article N" in Chinese numbering); following paragraphs stay with their clause. Chapter headings ("Chapter N", Markdown headings) go into the context header instead of becoming chunks. A Markdown table stays in one chunk together with its caption; long tables are split by rows with the header row repeated. Without clause numbers, each paragraph is its own chunk.
 3. **Adds a context header** to every chunk: `【《title》｜document number｜effective date｜chapter】`, so a single retrieved chunk still tells which document and version it comes from.
+
+## Setup
+
+1. Install the plugin from the Dify Marketplace (requires Dify 1.9.0 or later). No credentials or API keys are needed.
+2. In a knowledge pipeline, add **Clean & Chunk by Clause** (or the Parent-Child version) after the extractor.
+3. Set **Input Content** to the extractor's text output, and set the Knowledge Base node's chunk input to this tool's `result`.
+4. Use **Test Run** to preview the chunks before publishing the pipeline.
 
 ## Parameters
 
