@@ -1,0 +1,64 @@
+identity:
+  name: clean_chunk_parent_child
+  author: Cylunjoe
+  label:
+    en_US: Clean & Chunk by Clause (Parent-Child)
+    zh_Hans: 去噪并按条款父子分段
+description:
+  human:
+    en_US: Remove cover/footer/separator/addressee lines and split a policy document into clause-level chunks, each prefixed with title, document number, effective date and chapter.
+    zh_Hans: 去掉封面落款、分隔线、主送机关，把制度类文档按条款切成段，每段带上标题、文号、施行日期和所属章节。
+  llm: Clean a policy document and split it into clause-level parent chunks with sentence-level child chunks.
+parameters:
+  - name: input_text
+    type: string
+    required: true
+    label:
+      en_US: Input Content
+      zh_Hans: 输入文本
+    human_description:
+      en_US: Text of one document, usually the output of an extractor.
+      zh_Hans: 一份文档的文字，通常接在文本提取器后面。
+    llm_description: Text of one document.
+    form: llm
+  - name: title
+    type: string
+    required: false
+    label:
+      en_US: Document Title
+      zh_Hans: 文档标题
+    human_description:
+      en_US: Optional. If empty, the first title-like line of the document is used.
+      zh_Hans: 可不填；不填时取文档开头第一个像公文标题的行。
+    llm_description: Title of the document, optional.
+    form: llm
+  - name: max_length
+    type: number
+    required: false
+    default: 500
+    label:
+      en_US: Maximum Chunk Length
+      zh_Hans: 每段最大字数
+    human_description:
+      en_US: Longer clauses are split at sentence ends; long tables are split by rows with the header row repeated.
+      zh_Hans: 超长的条款按句号、分号切开；长表格按行切开，每块重复表头。
+    form: form
+  - name: context_header
+    type: boolean
+    required: false
+    default: true
+    label:
+      en_US: Add Context Header
+      zh_Hans: 加上下文头
+    human_description:
+      en_US: Prefix each chunk with title, document number, effective date and chapter.
+      zh_Hans: 每段开头加上标题、文号、施行日期和所属章节。
+    form: form
+output_schema:
+  type: object
+  properties:
+    result:
+      $ref: "https://dify.ai/schemas/v1/parent_child_structure.json"
+extra:
+  python:
+    source: tools/clean_chunk_parent_child.py

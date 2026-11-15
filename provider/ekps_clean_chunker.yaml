@@ -1,0 +1,18 @@
+identity:
+  author: Cylunjoe
+  name: ekps_clean_chunker
+  label:
+    en_US: EKPS Clean Chunker
+    zh_Hans: EKPS 清洗分段器
+  description:
+    en_US: Clean and chunk policy documents by clause.
+    zh_Hans: 制度类文档去噪、按条款分段。
+  icon: icon.svg
+  tags:
+    - rag
+tools:
+  - tools/clean_chunk.yaml
+  - tools/clean_chunk_parent_child.yaml
+extra:
+  python:
+    source: provider/ekps_clean_chunker.py
